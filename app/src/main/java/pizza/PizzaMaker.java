@@ -13,22 +13,34 @@ public class PizzaMaker {
      * @return the appropriate type of pizza
      */
     public static Pizza createPizza(String pizzaType) {
-        return switch (pizzaType) {
-            case "Deluxe" -> new Deluxe(Size.SMALL, Sauce.TOMATO,
+        Pizza pizza;
+        if (pizzaType.equals("Deluxe")){
+            pizza = new Deluxe(Size.SMALL, Sauce.TOMATO,
                     false, false, 0);
-            case "Supreme" -> new Supreme(Size.SMALL, Sauce.TOMATO,
+        }
+        if (pizzaType.equals("Supreme")){
+            pizza = new Supreme(Size.SMALL, Sauce.TOMATO,
                     false, false, 0);
-            case "Meatzza" -> new Meatzza(Size.SMALL, Sauce.TOMATO,
+        }
+        if (pizzaType.equals("Meatzza")){
+            pizza = new Meatzza(Size.SMALL, Sauce.TOMATO,
                     false, false, 0);
-            case "Pepperoni" -> new Pepperoni(Size.SMALL, Sauce.TOMATO,
+        }
+        if (pizzaType.equals("Pepperoni")){
+            pizza = new Pepperoni(Size.SMALL, Sauce.TOMATO,
                     false, false, 0);
-            case "Seafood" -> new Seafood(Size.SMALL, Sauce.ALFREDO,
+        }
+        if (pizzaType.equals("Seafood")){
+            pizza = new Seafood(Size.SMALL, Sauce.ALFREDO,
                     false, false, 0);
-            case "BuildYourOwn" ->
-                    new BuildYourOwn(new ArrayList<Topping>(), Size.SMALL, Sauce.TOMATO
-                            , false, false, 0);
-            default ->
-                    throw new IllegalStateException("Unexpected value: " + pizzaType);
-        };
+        }
+        if (pizzaType.equals("BuildYourOwn")){
+            pizza = new BuildYourOwn(new ArrayList<Topping>(), Size.SMALL, Sauce.TOMATO
+                    , false, false, 0);
+        }
+        else{
+            throw new IllegalStateException("Unexpected value: " + pizzaType);
+        }
+        return pizza;
     }
 }

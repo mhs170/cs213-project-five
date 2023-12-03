@@ -1,8 +1,5 @@
 package pizza;
 
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,10 +14,11 @@ public class StoreOrders {
 
     /**
      * Get next order number based on static counter
+     *
      * @return the next order number
      */
     public static int getNextOrderNumber() {
-        nextOrderNumber ++;
+        nextOrderNumber++;
         return nextOrderNumber;
     }
 
@@ -33,6 +31,7 @@ public class StoreOrders {
 
     /**
      * Add an order
+     *
      * @param order order to add
      */
     public void addOrder(Order order) {
@@ -41,6 +40,7 @@ public class StoreOrders {
 
     /**
      * Remove an order
+     *
      * @param order order to remove
      */
     public void removeOrder(Order order) {
@@ -49,11 +49,12 @@ public class StoreOrders {
 
     /**
      * Get numbers of all orders in a list of ints
+     *
      * @return int list of order numbers
      */
     public List<Integer> getOrderNumbers() {
         List<Integer> orderNumbers = new ArrayList<>();
-        for(Order order : orders) {
+        for (Order order : orders) {
             orderNumbers.add(order.getOrderNumber());
         }
         return orderNumbers;
@@ -61,35 +62,16 @@ public class StoreOrders {
 
     /**
      * Get order from orders based on order number
+     *
      * @param orderNumber order number inputted
      * @return order object outputted
      */
     public Order getOrder(int orderNumber) {
-        for(Order order: orders) {
-            if(order.getOrderNumber() == orderNumber) {
+        for (Order order : orders) {
+            if (order.getOrderNumber() == orderNumber) {
                 return order;
             }
         }
         return null;
-    }
-
-    /**
-     * Method to save the store orders to an external text file
-     */
-    public void export() throws FileNotFoundException {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Save store orders");
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text Files", "*.txt"));
-        File file = fileChooser.showSaveDialog(new Stage());
-        if(file != null) {
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
-                for (Order order : orders) {
-                    writer.write(order.toString());
-                    writer.newLine();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
     }
 }
