@@ -28,7 +28,7 @@
             android:label="@string/title_activity_build_your_own_screen"
             android:theme="@style/Theme.Cs213projectfive.NoActionBar" />
         <activity
-            android:name="pizza.SpecialtyPizza"
+            android:name="pizza.SpecialtyPizzaScreen"
             android:exported="false"
             android:label="@string/title_activity_specialty_pizza"
             android:theme="@style/Theme.Cs213projectfive.NoActionBar" />

@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="pizza.SpecialtyPizza"
-    tools:showIn="@layout/activity_specialty_pizza">
+    tools:context="pizza.SpecialtyPizzaScreen"
+    tools:showIn="@layout/activity_specialty_pizza_screen">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="840dp"

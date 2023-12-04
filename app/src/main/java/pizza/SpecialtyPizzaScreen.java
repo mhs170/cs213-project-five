@@ -11,18 +11,17 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.view.View;
 
-import com.example.cs213_project_five.R;
-import com.example.cs213_project_five.databinding.ActivitySpecialtyPizzaBinding;
+import com.example.cs213_project_five.databinding.ActivitySpecialtyPizzaScreenBinding;
 
-public class SpecialtyPizza extends AppCompatActivity {
+public class SpecialtyPizzaScreen extends AppCompatActivity {
 
-    private ActivitySpecialtyPizzaBinding binding;
+    private ActivitySpecialtyPizzaScreenBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = ActivitySpecialtyPizzaBinding.inflate(getLayoutInflater());
+        binding = ActivitySpecialtyPizzaScreenBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         Toolbar toolbar = binding.toolbar;
