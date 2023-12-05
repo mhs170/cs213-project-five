@@ -1,5 +1,6 @@
 package pizza;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.appbar.CollapsingToolbarLayout;
@@ -10,33 +11,45 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ListView;
 
 import com.example.cs213_project_five.R;
-import com.example.cs213_project_five.databinding.ActivityCurrentOrderScreenBinding;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class CurrentOrderScreen extends AppCompatActivity {
 
-    private ActivityCurrentOrderScreenBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_current_order_screen);
 
-        binding = ActivityCurrentOrderScreenBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        ListView pizza_list = findViewById(R.id.list_current_pizzas);
 
-        Toolbar toolbar = binding.toolbar;
-        setSupportActionBar(toolbar);
-        CollapsingToolbarLayout toolBarLayout = binding.toolbarLayout;
-        toolBarLayout.setTitle(getTitle());
+        List<Pizza> pizzas = Singleton.getInstance().currentOrder.getPizzas();
+        List<String> pizzaStrings = pizzas.stream()
+                .map(object -> Objects.toString(object, null))
+                .collect(Collectors.toList());
 
-        FloatingActionButton fab = binding.fab;
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
+        ArrayAdapter<String> toppings = new ArrayAdapter<>(
+                this,
+                R.layout.specialty_item_selected_toppings_item,
+                R.id.tv_listview_item,
+                pizzaStrings
+        );
+        pizza_list.setAdapter(toppings);
+
+        //home button
+        Button home = findViewById(R.id.btn_home2);
+        home.setOnClickListener(view -> {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
         });
     }
 }

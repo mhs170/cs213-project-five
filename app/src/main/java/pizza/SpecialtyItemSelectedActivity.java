@@ -47,6 +47,17 @@ public class SpecialtyItemSelectedActivity extends AppCompatActivity {
         return pizza;
     }
 
+    private void goToCurrentOrderScreen() {
+        Intent intent = new Intent(this, CurrentOrderScreen.class);
+        startActivity(intent);
+    }
+
+    private void addPizzasToCurrentOrder(Pizza pizza, int quantity) {
+        for (int i = 0; i < quantity; i++) {
+            Singleton.getInstance().currentOrder.addToOrder(pizza);
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,7 +109,9 @@ public class SpecialtyItemSelectedActivity extends AppCompatActivity {
                 public void onClick(DialogInterface dialog, int which) {
                     Toast.makeText(view.getContext(),
                             pizzaType + " pizza(s) added.", Toast.LENGTH_LONG).show();
-                    finish();
+
+                    addPizzasToCurrentOrder(getPizza(), quantity);
+                    goToCurrentOrderScreen();
                 }
                 //handle the "NO" click
             }).setNegativeButton("no", new DialogInterface.OnClickListener() {

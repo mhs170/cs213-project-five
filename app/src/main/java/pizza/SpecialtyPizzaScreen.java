@@ -39,9 +39,10 @@ public class SpecialtyPizzaScreen extends AppCompatActivity {
         rcview.setLayoutManager(new LinearLayoutManager(this));
 
         //home button
-        Button back = findViewById(R.id.btn_back);
-        back.setOnClickListener(view -> {
-            finish();
+        Button home = findViewById(R.id.btn_home);
+        home.setOnClickListener(view -> {
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
         });
     }
 
