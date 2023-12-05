@@ -1,20 +1,28 @@
 package pizza;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 import com.example.cs213_project_five.R;
+
+import java.util.ArrayList;
+
 /**
  * This is an Adapter class to be used to instantiate an adapter for the RecyclerView.
  * Must extend RecyclerView.Adapter, which will enforce you to implement 3 methods:
@@ -27,13 +35,16 @@ import com.example.cs213_project_five.R;
  * you do something similar to the onCreate() method in an Activity.
  * @author Lily Chang
  */
-class SpecialtyItemsAdapter extends RecyclerView.Adapter<SpecialtyItemsAdapter.ItemsHolder>{
+class PizzaItemAdapter extends RecyclerView.Adapter<PizzaItemAdapter.ItemsHolder>{
     private Context context; //need the context to inflate the layout
-    private ArrayList<SpecialityItem> items; //need the data binding to each row of RecyclerView
+    private ArrayList<PizzaItem> items; //need the data binding to each row of RecyclerView
 
-    public SpecialtyItemsAdapter(Context context, ArrayList<SpecialityItem> items) {
+    private boolean deleteOnClick;
+
+    public PizzaItemAdapter(Context context, ArrayList<PizzaItem> items, boolean deleteOnClick) {
         this.context = context;
         this.items = items;
+        this.deleteOnClick = deleteOnClick;
     }
 
     /**
@@ -49,7 +60,7 @@ class SpecialtyItemsAdapter extends RecyclerView.Adapter<SpecialtyItemsAdapter.I
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.item_row_view, parent, false);
 
-        return new ItemsHolder(view);
+        return new ItemsHolder(view, deleteOnClick);
     }
 
     /**
@@ -64,6 +75,7 @@ class SpecialtyItemsAdapter extends RecyclerView.Adapter<SpecialtyItemsAdapter.I
         holder.tv_name.setText(items.get(position).getItemName());
         holder.tv_price.setText(items.get(position).getDescription());
         holder.im_item.setImageResource(items.get(position).getImage());
+        holder.pizza = items.get(position).getPizza();
     }
 
     /**
@@ -84,7 +96,9 @@ class SpecialtyItemsAdapter extends RecyclerView.Adapter<SpecialtyItemsAdapter.I
         private Button btn_add;
         private ConstraintLayout parentLayout; //this is the row layout
 
-        public ItemsHolder(@NonNull View itemView) {
+        private Pizza pizza;
+
+        public ItemsHolder(@NonNull View itemView, boolean deleteOnClick) {
             super(itemView);
             tv_name = itemView.findViewById(R.id.tv_flavor);
             tv_price = itemView.findViewById(R.id.tv_price);
@@ -92,13 +106,33 @@ class SpecialtyItemsAdapter extends RecyclerView.Adapter<SpecialtyItemsAdapter.I
             parentLayout = itemView.findViewById(R.id.rowLayout);
 
             /* set onClickListener for the row layout,
-             * clicking on a row will navigate to another Activity
+            clicking on a row will trigger this
              */
-            parentLayout.setOnClickListener(view -> {
-                    Intent intent = new Intent(itemView.getContext(), SpecialtyItemSelectedActivity.class);
-                    intent.putExtra("ITEM", tv_name.getText());
-                    itemView.getContext().startActivity(intent);
-             });
+            if(deleteOnClick) {
+                parentLayout.setOnClickListener(view -> {
+
+                    AlertDialog.Builder alert = new AlertDialog.Builder(view.getContext());
+
+                    alert.setTitle("Delete pizza");
+                    alert.setMessage("Do you want to delete this " + pizza.getClass().getSimpleName() + " pizza?");
+
+                    //handle the "YES" click
+                    alert.setPositiveButton("yes", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            Singleton.getInstance().currentOrder.removeFromOrder(pizza);
+                            Toast.makeText(view.getContext(), "Deleted pizza", Toast.LENGTH_SHORT).show();
+                            parentLayout.setVisibility(View.INVISIBLE);
+                        }
+                        //handle the "NO" click
+                    }).setNegativeButton("no", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            //do nothing
+                        }
+                    });
+                    AlertDialog dialog = alert.create();
+                    dialog.show();
+                });
+            }
         }
     }
 }

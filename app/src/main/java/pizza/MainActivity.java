@@ -18,18 +18,22 @@ public class MainActivity extends AppCompatActivity {
 
     public void showSpecialtyPizzaScreen(View view) {
         Intent intent = new Intent(this, SpecialtyPizzaScreen.class);
+        finish();
         startActivity(intent);
     }
     public void showBuildYourOwnScreen(View view) {
         Intent intent = new Intent(this, BuildYourOwnScreen.class);
+        finish();
         startActivity(intent);
     }
     public void showCurrentOrderScreen(View view) {
         Intent intent = new Intent(this, CurrentOrderScreen.class);
+        finish();
         startActivity(intent);
     }
     public void showStoreOrderScreen(View view) {
         Intent intent = new Intent(this, StoreOrderScreen.class);
+        finish();
         startActivity(intent);
     }
 }

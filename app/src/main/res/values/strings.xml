@@ -17,7 +17,9 @@
     <string name="action_confirm">Next</string>
     <string name="action_cancel">Cancel</string>
     <string name="action_back">Back</string>
-    <string name="click_next_prompt">Then click next for the price.</string>
+    <string name="action_place_order">Place Order</string>
+    <string name="click_next_prompt">Then click next for the price.</string>\
+    <string name="click_to_delete_prompt">Click a pizza to delete it.</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 

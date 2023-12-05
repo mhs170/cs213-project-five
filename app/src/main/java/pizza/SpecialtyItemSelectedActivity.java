@@ -49,6 +49,7 @@ public class SpecialtyItemSelectedActivity extends AppCompatActivity {
 
     private void goToCurrentOrderScreen() {
         Intent intent = new Intent(this, CurrentOrderScreen.class);
+        finish();
         startActivity(intent);
     }
 
@@ -96,11 +97,13 @@ public class SpecialtyItemSelectedActivity extends AppCompatActivity {
             Spinner quantityDropdown = findViewById(R.id.spinner_quantity);
             int quantity = Integer.parseInt(quantityDropdown.getSelectedItem().toString());
             @SuppressLint("DefaultLocale") String message = String.format(
-                    "%d %s %s pizza(s). \n\nPrice: $%.2f",
+                    "%d %s %s Pizza%s. \n\n\nPizza price: $%.2f %s",
                     quantity,
                     getPizza().size.toString(),
                     pizzaType,
-                    getPizza().price() * quantity
+                    quantity > 1 ? "s" : "",
+                    getPizza().price(),
+                    quantity > 1 ? String.format("\n\nTotal price: $%.2f", getPizza().price() * quantity) : ""
             );
             alert.setMessage(message);
 
@@ -108,7 +111,7 @@ public class SpecialtyItemSelectedActivity extends AppCompatActivity {
             alert.setPositiveButton("yes", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     Toast.makeText(view.getContext(),
-                            pizzaType + " pizza(s) added.", Toast.LENGTH_LONG).show();
+                            pizzaType + " pizza(s) added.", Toast.LENGTH_SHORT).show();
 
                     addPizzasToCurrentOrder(getPizza(), quantity);
                     goToCurrentOrderScreen();
@@ -117,7 +120,7 @@ public class SpecialtyItemSelectedActivity extends AppCompatActivity {
             }).setNegativeButton("no", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     Toast.makeText(view.getContext(),
-                            pizzaType + " pizza(s) not added.", Toast.LENGTH_LONG).show();
+                            pizzaType + " pizza(s) not added.", Toast.LENGTH_SHORT).show();
                 }
             });
             AlertDialog dialog = alert.create();
