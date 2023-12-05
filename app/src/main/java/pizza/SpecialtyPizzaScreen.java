@@ -37,6 +37,7 @@ public class SpecialtyPizzaScreen extends AppCompatActivity {
         Button home = findViewById(R.id.btn_home);
         home.setOnClickListener(view -> {
                 Intent intent = new Intent(this, MainActivity.class);
+                finish();
                 startActivity(intent);
         });
     }
