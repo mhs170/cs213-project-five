@@ -6,14 +6,67 @@
     android:layout_height="match_parent"
     tools:context=".ItemSelectedActivity">
 
-    <Button
-        android:id="@+id/btn1"
-        android:layout_width="400dp"
-        android:layout_height="95dp"
-        android:layout_marginTop="292dp"
-        android:text="Button"
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="245dp"
+        android:layout_height="69dp"
+        android:layout_marginTop="44dp"
+        android:text="@string/placeholder"
+        android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_toppings_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="42dp"
+        android:layout_marginTop="44dp"
+        android:text="@string/placeholder"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.426"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+    <Button
+        android:id="@+id/btn_confirm"
+        android:layout_width="380dp"
+        android:layout_height="94dp"
+        android:backgroundTint="#A46649"
+        android:text="@string/action_confirm"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.858" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="42dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="312dp"
+        android:text="@string/toppings_text"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title" />
+
+    <Button
+        android:id="@+id/btn_cancel"
+        android:layout_width="379dp"
+        android:layout_height="76dp"
+        android:backgroundTint="#7A7A7A"
+        android:text="@string/action_cancel"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_confirm"
+        app:rippleColor="#AAAAAA" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

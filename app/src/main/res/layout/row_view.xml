@@ -8,9 +8,10 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="426dp"
+        android:layout_height="243dp"
         android:background="@color/black"
+        android:fadingEdge="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -18,7 +19,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="229dp"
             android:background="@color/black">
 
             <TextView
@@ -27,6 +28,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="55dp"
                 android:layout_marginTop="24dp"
+                android:text="@string/placeholder"
                 android:textColor="@color/white"
                 android:textSize="24sp"
                 android:textStyle="bold"
@@ -37,7 +39,9 @@
                 android:id="@+id/im_item"
                 android:layout_width="130dp"
                 android:layout_height="130dp"
-                android:contentDescription="TODO"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="24dp"
+                android:contentDescription="@string/app_name"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:srcCompat="@tools:sample/avatars" />
@@ -47,23 +51,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:layout_weight="1"
+                android:ellipsize="none"
+                android:maxLines="100"
+                android:scrollHorizontally="false"
+                android:text="@string/placeholder"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="@+id/tv_flavor"
                 app:layout_constraintTop_toBottomOf="@+id/tv_flavor" />
 
-            <Button
-                android:id="@+id/btn_add"
-                android:layout_width="47dp"
-                android:layout_height="43dp"
-                android:layout_marginStart="32dp"
-                android:layout_marginBottom="32dp"
-                android:text="+"
-                android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/tv_price"
-                app:layout_constraintTop_toTopOf="@+id/tv_price"
-                tools:ignore="TouchTargetSizeCheck" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 

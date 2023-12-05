@@ -5,7 +5,13 @@
     <string name="title_activity_main">RU Pizza</string>
     <string name="title_activity_build_your_own_screen">Build Your Own</string>
     <string name="title_activity_store_order_screen">Store Orders</string>
+    <string name="title_activity_item_selected">Item Selected</string>
     <string name="title_activity_current_order_screen">Current Order</string>
+    <string name="placeholder">Placeholder…</string>
+    <string name="toppings_text">Toppings:</string>
+    <string name="action_add">+Add</string>
+    <string name="action_confirm">Next</string>
+    <string name="action_cancel">Cancel</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 

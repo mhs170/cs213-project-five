@@ -12,6 +12,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.TextUtils;
 import android.view.View;
 
 import com.example.cs213_project_five.databinding.ActivitySpecialtyPizzaScreenBinding;
@@ -58,7 +59,8 @@ public class SpecialtyPizzaScreen extends AppCompatActivity {
          * data sources.
          */
         for (int i = 0; i < itemNames.length; i++) {
-            items.add(new Item(itemNames[i], itemImages[i], "$1.39"));
+            Pizza pizza = PizzaMaker.createPizza(itemNames[i]);
+            items.add(new Item(itemNames[i], itemImages[i], "$" + pizza.price() + "\n" + TextUtils.join("\n", pizza.toppings)));
         }
     }
 }
