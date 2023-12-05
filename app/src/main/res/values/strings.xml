@@ -9,6 +9,10 @@
     <string name="title_activity_current_order_screen">Current Order</string>
     <string name="placeholder">Placeholder…</string>
     <string name="toppings_text">Toppings:</string>
+    <string name="quantity_label">Quantity:</string>
+    <string name="size_label">Size:</string>
+    <string name="extra_cheese_label">Extra Cheese</string>
+    <string name="extra_sauce_label">Extra Sauce</string>
     <string name="action_add">+Add</string>
     <string name="action_confirm">Next</string>
     <string name="action_cancel">Cancel</string>

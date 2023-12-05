@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:foregroundTint="#FFFFFF"
     tools:context=".ItemSelectedActivity">
 
     <TextView
@@ -19,35 +20,36 @@
 
     <Button
         android:id="@+id/btn_confirm"
-        android:layout_width="380dp"
-        android:layout_height="94dp"
+        android:layout_width="374dp"
+        android:layout_height="67dp"
         android:backgroundTint="#A46649"
         android:text="@string/action_confirm"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.486"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.858" />
+        app:layout_constraintVertical_bias="0.882" />
 
     <TextView
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="42dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="28dp"
         android:layout_marginEnd="312dp"
         android:text="@string/toppings_text"
-        android:textSize="24sp"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.553"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_title" />
 
     <Button
         android:id="@+id/btn_cancel"
-        android:layout_width="379dp"
-        android:layout_height="76dp"
+        android:layout_width="381dp"
+        android:layout_height="62dp"
         android:backgroundTint="#7A7A7A"
         android:text="@string/action_cancel"
         android:textSize="24sp"
@@ -63,8 +65,70 @@
         android:layout_height="157dp"
         android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.666"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+    <Spinner
+        android:id="@+id/spinner_quantity"
+        android:layout_width="354dp"
+        android:layout_height="54dp"
+        android:layout_marginTop="104dp"
+        android:background="#DDDDDD"
+        android:entries="@array/quantities"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_size" />
+
+    <Spinner
+        android:id="@+id/spinner_size"
+        android:layout_width="355dp"
+        android:layout_height="53dp"
+        android:layout_marginTop="40dp"
+        android:background="#DCDCDC"
+        android:entries="@array/sizes"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/list_toppings" />
+
+    <CheckBox
+        android:id="@+id/cb_extra_cheese"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/extra_cheese_label"
+        app:layout_constraintEnd_toStartOf="@+id/cb_extra_sauce"
+        app:layout_constraintHorizontal_bias="0.433"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_size" />
+
+    <CheckBox
+        android:id="@+id/cb_extra_sauce"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="72dp"
+        android:text="@string/extra_sauce_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_size" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/quantity_label"
+        app:layout_constraintBottom_toTopOf="@+id/spinner_quantity"
+        app:layout_constraintEnd_toEndOf="@+id/spinner_quantity"
+        app:layout_constraintStart_toStartOf="@+id/spinner_quantity" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="354dp"
+        android:layout_height="25dp"
+        android:text="@string/size_label"
+        app:layout_constraintBottom_toTopOf="@+id/spinner_size"
+        app:layout_constraintEnd_toEndOf="@+id/spinner_size"
+        app:layout_constraintStart_toStartOf="@+id/spinner_size" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

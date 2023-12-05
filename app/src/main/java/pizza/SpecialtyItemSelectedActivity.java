@@ -1,12 +1,15 @@
 package pizza;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +36,17 @@ public class SpecialtyItemSelectedActivity extends AppCompatActivity {
     private Button confirmButton;
     private Button cancelButton;
 
+    private Pizza getPizza() {
+        Pizza pizza = PizzaMaker.createPizza(pizzaType);
+        CheckBox extraCheese = findViewById(R.id.cb_extra_cheese);
+        CheckBox extraSauce = findViewById(R.id.cb_extra_sauce);
+        pizza.setExtraCheese(extraCheese.isChecked());
+        pizza.setExtraSauce(extraSauce.isChecked());
+        Spinner sizeDropdown = findViewById(R.id.spinner_size);
+        pizza.setSize(Size.valueOf(sizeDropdown.getSelectedItem().toString().toUpperCase()));
+        return pizza;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +56,7 @@ public class SpecialtyItemSelectedActivity extends AppCompatActivity {
         pizzaType = intent.getStringExtra("ITEM");
 
         title = findViewById(R.id.tv_title);
-        title.setText(String.format("Add a %s Pizza to your order?", pizzaType));
+        title.setText(String.format("Customize your %s Pizza.", pizzaType));
 
         ArrayList<Topping> toppingsList = PizzaMaker.createPizza(pizzaType).toppings;
         List<String> toppingStrings = toppingsList.stream()
@@ -66,20 +80,31 @@ public class SpecialtyItemSelectedActivity extends AppCompatActivity {
         confirmButton = findViewById(R.id.btn_confirm);
         confirmButton.setOnClickListener(view -> {
             AlertDialog.Builder alert = new AlertDialog.Builder(view.getContext());
+
             alert.setTitle("Add to order");
-            alert.setMessage(pizzaType);
+            Spinner quantityDropdown = findViewById(R.id.spinner_quantity);
+            int quantity = Integer.parseInt(quantityDropdown.getSelectedItem().toString());
+            @SuppressLint("DefaultLocale") String message = String.format(
+                    "%d %s %s pizza(s). \n\nPrice: $%.2f",
+                    quantity,
+                    getPizza().size.toString(),
+                    pizzaType,
+                    getPizza().price() * quantity
+            );
+            alert.setMessage(message);
+
             //handle the "YES" click
             alert.setPositiveButton("yes", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     Toast.makeText(view.getContext(),
-                            pizzaType + " added.", Toast.LENGTH_LONG).show();
+                            pizzaType + " pizza(s) added.", Toast.LENGTH_LONG).show();
                     finish();
                 }
                 //handle the "NO" click
             }).setNegativeButton("no", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     Toast.makeText(view.getContext(),
-                            pizzaType + " not added.", Toast.LENGTH_LONG).show();
+                            pizzaType + " pizza(s) not added.", Toast.LENGTH_LONG).show();
                 }
             });
             AlertDialog dialog = alert.create();
