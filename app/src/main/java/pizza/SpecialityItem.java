@@ -7,18 +7,17 @@ package pizza;
 public class SpecialityItem {
 	private String itemName;
 	private int image;
-	private String unitPrice; //for demo purpose, the unitPrice is of String type
-
+	private String description;
 	/**
 	 * Parameterized constructor.
 	 * @param itemName
 	 * @param image
-	 * @param unitPrice
+	 * @param description
 	 */
-	public SpecialityItem(String itemName, int image, String unitPrice) {
+	public SpecialityItem(String itemName, int image, String description) {
 		this.itemName = itemName;
 		this.image = image;
-		this.unitPrice = unitPrice;
+		this.description = description;
 	}
 
 	/**
@@ -41,7 +40,7 @@ public class SpecialityItem {
 	 * Getter method that returns the unit price.
 	 * @return the unit price of the item.
 	 */
-	public String getUnitPrice() {
-		return unitPrice;
+	public String getDescription() {
+		return description;
 	}
 }

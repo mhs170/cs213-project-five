@@ -17,11 +17,6 @@ import java.util.ArrayList;
 public class SpecialtyPizzaScreen extends AppCompatActivity {
     private ArrayList<SpecialityItem> items = new ArrayList<>();
 
-    private int [] itemImages = {
-            R.drawable.deluxe, R.drawable.meatzza,
-            R.drawable.pepperoni, R.drawable.seafood, R.drawable.supreme
-    };
-
     /**
      * Get the references of all instances of Views defined in the layout file, set up the list of
      * items to be display in the RecyclerView.
@@ -62,7 +57,11 @@ public class SpecialtyPizzaScreen extends AppCompatActivity {
          */
         for (int i = 0; i < itemNames.length; i++) {
             Pizza pizza = PizzaMaker.createPizza(itemNames[i]);
-            items.add(new SpecialityItem(itemNames[i], itemImages[i], "$" + pizza.price() + "\n" + TextUtils.join("\n", pizza.toppings)));
+            items.add(new SpecialityItem(
+                    itemNames[i],
+                    PizzaImages.getImage(itemNames[i]),
+                    "$" + pizza.price() + "\n" + TextUtils.join("\n", pizza.toppings)
+            ));
         }
     }
 }

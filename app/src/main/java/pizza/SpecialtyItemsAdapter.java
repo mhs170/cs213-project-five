@@ -62,7 +62,7 @@ class SpecialtyItemsAdapter extends RecyclerView.Adapter<SpecialtyItemsAdapter.I
     public void onBindViewHolder(@NonNull ItemsHolder holder, int position) {
         //assign values for each row
         holder.tv_name.setText(items.get(position).getItemName());
-        holder.tv_price.setText(items.get(position).getUnitPrice());
+        holder.tv_price.setText(items.get(position).getDescription());
         holder.im_item.setImageResource(items.get(position).getImage());
     }
 
