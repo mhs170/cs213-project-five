@@ -33,7 +33,7 @@
             android:label="@string/title_activity_specialty_pizza"
             android:theme="@style/Theme.Cs213projectfive.NoActionBar" />
         <activity
-            android:name="pizza.ItemSelectedActivity"
+            android:name="pizza.SpecialtyItemSelectedActivity"
             android:exported="false"
             android:label="@string/title_activity_item_selected"
             android:theme="@style/Theme.Cs213projectfive.NoActionBar" />

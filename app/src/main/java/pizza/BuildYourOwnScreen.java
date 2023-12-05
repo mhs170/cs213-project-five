@@ -2,25 +2,17 @@ package pizza;
 
 import android.os.Bundle;
 
-import com.google.android.material.appbar.CollapsingToolbarLayout;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.View;
-
 import com.example.cs213_project_five.R;
-import com.example.cs213_project_five.databinding.ActivityBuildYourOwnScreenBinding;
 
 import java.util.ArrayList;
 
 public class BuildYourOwnScreen extends AppCompatActivity {
 
-    private ArrayList<Item> items = new ArrayList<>();
+    private ArrayList<SpecialityItem> items = new ArrayList<>();
 
     private int [] itemImages = {
             R.drawable.deluxe, R.drawable.meatzza,
@@ -38,7 +30,7 @@ public class BuildYourOwnScreen extends AppCompatActivity {
         setContentView(R.layout.activity_build_your_own_screen);
         RecyclerView rcview = findViewById(R.id.rcView_menu);
         setupMenuItems(); //add the list of items to the ArrayList
-        ItemsAdapter adapter = new ItemsAdapter(this, items); //create the adapter
+        SpecialtyItemsAdapter adapter = new SpecialtyItemsAdapter(this, items); //create the adapter
         rcview.setAdapter(adapter); //bind the list of items to the RecyclerView
         //use the LinearLayout for the RecyclerView
         rcview.setLayoutManager(new LinearLayoutManager(this));
@@ -59,7 +51,7 @@ public class BuildYourOwnScreen extends AppCompatActivity {
          * data sources.
          */
         for (int i = 0; i < itemNames.length; i++) {
-            items.add(new Item(itemNames[i], itemImages[i], "$1.39"));
+            items.add(new SpecialityItem(itemNames[i], itemImages[i], "$1.39"));
         }
     }
 }

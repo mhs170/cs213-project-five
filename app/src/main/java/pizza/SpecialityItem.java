@@ -4,7 +4,7 @@ package pizza;
  * This class defines the data structure of an item to be displayed in the RecyclerView
  * @author Lily Chang
  */
-public class Item {
+public class SpecialityItem {
 	private String itemName;
 	private int image;
 	private String unitPrice; //for demo purpose, the unitPrice is of String type
@@ -15,7 +15,7 @@ public class Item {
 	 * @param image
 	 * @param unitPrice
 	 */
-	public Item(String itemName, int image, String unitPrice) {
+	public SpecialityItem(String itemName, int image, String unitPrice) {
 		this.itemName = itemName;
 		this.image = image;
 		this.unitPrice = unitPrice;

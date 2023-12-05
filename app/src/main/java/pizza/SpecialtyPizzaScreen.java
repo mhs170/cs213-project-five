@@ -1,26 +1,21 @@
 package pizza;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.cs213_project_five.R;
-import com.google.android.material.appbar.CollapsingToolbarLayout;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.TextUtils;
-import android.view.View;
-
-import com.example.cs213_project_five.databinding.ActivitySpecialtyPizzaScreenBinding;
+import android.widget.Button;
 
 import java.util.ArrayList;
 
 public class SpecialtyPizzaScreen extends AppCompatActivity {
-    private ArrayList<Item> items = new ArrayList<>();
+    private ArrayList<SpecialityItem> items = new ArrayList<>();
 
     private int [] itemImages = {
             R.drawable.deluxe, R.drawable.meatzza,
@@ -38,10 +33,16 @@ public class SpecialtyPizzaScreen extends AppCompatActivity {
         setContentView(R.layout.activity_specialty_pizza_screen);
         RecyclerView rcview = findViewById(R.id.rcView_menu);
         setupMenuItems(); //add the list of items to the ArrayList
-        ItemsAdapter adapter = new ItemsAdapter(this, items); //create the adapter
+        SpecialtyItemsAdapter adapter = new SpecialtyItemsAdapter(this, items); //create the adapter
         rcview.setAdapter(adapter); //bind the list of items to the RecyclerView
         //use the LinearLayout for the RecyclerView
         rcview.setLayoutManager(new LinearLayoutManager(this));
+
+        //home button
+        Button back = findViewById(R.id.btn_back);
+        back.setOnClickListener(view -> {
+            finish();
+        });
     }
 
     /**
@@ -60,7 +61,7 @@ public class SpecialtyPizzaScreen extends AppCompatActivity {
          */
         for (int i = 0; i < itemNames.length; i++) {
             Pizza pizza = PizzaMaker.createPizza(itemNames[i]);
-            items.add(new Item(itemNames[i], itemImages[i], "$" + pizza.price() + "\n" + TextUtils.join("\n", pizza.toppings)));
+            items.add(new SpecialityItem(itemNames[i], itemImages[i], "$" + pizza.price() + "\n" + TextUtils.join("\n", pizza.toppings)));
         }
     }
 }

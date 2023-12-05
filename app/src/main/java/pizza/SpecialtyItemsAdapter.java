@@ -1,8 +1,6 @@
 package pizza;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -30,11 +27,11 @@ import com.example.cs213_project_five.R;
  * you do something similar to the onCreate() method in an Activity.
  * @author Lily Chang
  */
-class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsHolder>{
+class SpecialtyItemsAdapter extends RecyclerView.Adapter<SpecialtyItemsAdapter.ItemsHolder>{
     private Context context; //need the context to inflate the layout
-    private ArrayList<Item> items; //need the data binding to each row of RecyclerView
+    private ArrayList<SpecialityItem> items; //need the data binding to each row of RecyclerView
 
-    public ItemsAdapter(Context context, ArrayList<Item> items) {
+    public SpecialtyItemsAdapter(Context context, ArrayList<SpecialityItem> items) {
         this.context = context;
         this.items = items;
     }
@@ -50,7 +47,7 @@ class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsHolder>{
     public ItemsHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         //inflate the row layout for the items
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.row_view, parent, false);
+        View view = inflater.inflate(R.layout.speciality_item_row_view, parent, false);
 
         return new ItemsHolder(view);
     }
@@ -98,7 +95,7 @@ class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsHolder>{
              * clicking on a row will navigate to another Activity
              */
             parentLayout.setOnClickListener(view -> {
-                    Intent intent = new Intent(itemView.getContext(), ItemSelectedActivity.class);
+                    Intent intent = new Intent(itemView.getContext(), SpecialtyItemSelectedActivity.class);
                     intent.putExtra("ITEM", tv_name.getText());
                     itemView.getContext().startActivity(intent);
              });
