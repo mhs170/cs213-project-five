@@ -18,6 +18,7 @@
     <string name="action_cancel">Cancel</string>
     <string name="action_back">Back</string>
     <string name="action_place_order">Place Order</string>
+    <string name="action_cancel_order">Cancel Order</string>
     <string name="click_next_prompt">Then click next for the price.</string>\
     <string name="click_to_delete_prompt">Click a pizza to delete it.</string>
     <string name="large_text">
@@ -110,4 +111,6 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="action_home">Home</string>
+    <string name="no_order">NO ORDERS\n</string>
+    <string name="order">Order</string>
 </resources>
