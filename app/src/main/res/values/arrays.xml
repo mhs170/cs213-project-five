@@ -19,4 +19,22 @@
         <item>Medium</item>
         <item>Large</item>
     </string-array>
+    <string-array name="sauces">
+        <item>Tomato</item>
+        <item>Alfredo</item>
+    </string-array>
+    <string-array name="available_toppings">
+        <item>Green Pepper</item>
+        <item>Mushroom</item>
+        <item>Onion</item>
+        <item>Pineapple</item>
+        <item>Pepperoni</item>
+        <item>Chicken</item>
+        <item>Ham</item>
+        <item>Beef</item>
+        <item>Sausage</item>
+        <item>Squid</item>
+        <item>Crab Meats</item>
+        <item>Shrimp</item>
+    </string-array>
 </resources>
