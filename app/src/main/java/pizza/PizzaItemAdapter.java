@@ -1,5 +1,8 @@
 package pizza;
 
+import static android.content.Intent.getIntent;
+import static androidx.core.content.ContextCompat.startActivity;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -120,8 +123,9 @@ class PizzaItemAdapter extends RecyclerView.Adapter<PizzaItemAdapter.ItemsHolder
                     alert.setPositiveButton("yes", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             Singleton.getInstance().currentOrder.removeFromOrder(pizza);
-                            Toast.makeText(view.getContext(), "Deleted pizza", Toast.LENGTH_SHORT).show();
-                            parentLayout.setVisibility(View.INVISIBLE);
+                            Toast.makeText(view.getContext(), "Deleted pizza.", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(view.getContext(), CurrentOrderScreen.class);
+                            startActivity(view.getContext(), intent, null);
                         }
                         //handle the "NO" click
                     }).setNegativeButton("no", new DialogInterface.OnClickListener() {
