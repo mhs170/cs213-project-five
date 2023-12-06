@@ -25,7 +25,8 @@ public class Alfredo extends Pizza{
         super(new ArrayList<>(
                 Arrays.asList(
                         Topping.CHICKEN,
-                        Topping.MUSHROOM
+                        Topping.MUSHROOM,
+                        Topping.GREEN_PEPPER
                 )
         ), size, sauce, extraSauce, extraCheese, price);
     }
