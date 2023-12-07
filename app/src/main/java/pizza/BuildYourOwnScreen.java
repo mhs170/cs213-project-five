@@ -11,6 +11,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -55,8 +56,8 @@ public class BuildYourOwnScreen extends AppCompatActivity implements AdapterView
     private Spinner sauceSpinner;
     private CheckBox extraSauceCheckBox;
     private CheckBox extraCheeseCheckBox;
-
     private Button addToOrderButton;
+    private TextView priceBox;
 
     /**
      * Get the references of all instances of Views defined in the layout file, set up the list of
@@ -143,6 +144,7 @@ public class BuildYourOwnScreen extends AppCompatActivity implements AdapterView
                             .show();
                 }
                 else{
+                    addPizzaToCurrentOrder(getPizza());
                     new AlertDialog.Builder(BuildYourOwnScreen.this)
                             .setTitle("Successfully added")
                             .setMessage("Successfully added pizza to current order.")
@@ -245,15 +247,25 @@ public class BuildYourOwnScreen extends AppCompatActivity implements AdapterView
         builder.show();
     }
 
+    private void addPizzaToCurrentOrder(Pizza pizza) {
+        Singleton.getInstance().currentOrder.addToOrder(pizza);
+    }
+
+    public void updatePrice() {
+        double price = getPizza().price();
+        priceBox.setText(String.format("%.2f", price));
+    }
 
 
     public Pizza getPizza() {
+        Size selectedSize = ((Size) sizeSpinner.getSelectedItem());
         Pizza pizza = PizzaMaker.createPizza("BuildYourOwn");
-        pizza.setToppings(new ArrayList<>(selectedToppings));
-        pizza.setSauce((Sauce) sauceSpinner.getSelectedItem());
+        pizza.setSize(selectedSize);
+        Sauce selectedSauce = ((Sauce) sauceSpinner.getSelectedItem());
+        pizza.setSauce(selectedSauce);
+        pizza.setToppings(selectedToppings);
         pizza.setExtraCheese(extraCheeseCheckBox.isSelected());
         pizza.setExtraSauce(extraSauceCheckBox.isSelected());
-        pizza.setSize((Size) sizeSpinner.getSelectedItem());
         return pizza;
     }
 }
