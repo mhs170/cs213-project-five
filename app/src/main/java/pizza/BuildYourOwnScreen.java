@@ -69,6 +69,8 @@ public class BuildYourOwnScreen extends AppCompatActivity implements AdapterView
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_build_your_own_screen);
 
+
+
         sizeSpinner = findViewById(R.id.size_spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.sizes, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -98,6 +100,7 @@ public class BuildYourOwnScreen extends AppCompatActivity implements AdapterView
                 else{
                     Toast.makeText(getApplicationContext(), "Extra Sauce Removed", Toast.LENGTH_SHORT).show();
                 }
+                updatePrice();
             }
         });
 
@@ -111,6 +114,7 @@ public class BuildYourOwnScreen extends AppCompatActivity implements AdapterView
                 else{
                     Toast.makeText(getApplicationContext(), "Extra Cheese Removed", Toast.LENGTH_SHORT).show();
                 }
+                updatePrice();
             }
         });
 
@@ -124,6 +128,10 @@ public class BuildYourOwnScreen extends AppCompatActivity implements AdapterView
         selectedToppingsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, selectedToppings);
         selectedToppingsListView.setAdapter(selectedToppingsAdapter);
         selectedToppingsListView.setOnItemClickListener(this);
+
+        priceBox = findViewById(R.id.priceBox);
+        updatePrice();
+
 
         addToOrderButton = findViewById(R.id.addToOrderButton);
         addToOrderButton.setOnClickListener(new View.OnClickListener() {
@@ -187,6 +195,7 @@ public class BuildYourOwnScreen extends AppCompatActivity implements AdapterView
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         String text = parent.getItemAtPosition(position).toString();
         Toast.makeText(parent.getContext(), text, Toast.LENGTH_SHORT).show();
+        updatePrice();
     }
 
     @Override
@@ -238,6 +247,7 @@ public class BuildYourOwnScreen extends AppCompatActivity implements AdapterView
             targetList.add(selectedTopping);
             sourceAdapter.notifyDataSetChanged();
             targetAdapter.notifyDataSetChanged();
+            updatePrice();
         });
 
         builder.setNegativeButton("Cancel", (dialog, which) -> {
@@ -252,8 +262,7 @@ public class BuildYourOwnScreen extends AppCompatActivity implements AdapterView
     }
 
     public void updatePrice() {
-        double price = getPizza().price();
-        priceBox.setText(String.format("%.2f", price));
+        priceBox.setText(String.format("%.2f", getPizza().price()));
     }
 
 
@@ -264,8 +273,8 @@ public class BuildYourOwnScreen extends AppCompatActivity implements AdapterView
         pizza.setSize(selectedSize);
         pizza.setSauce(selectedSauce);
         pizza.setToppings(selectedToppings);
-        pizza.setExtraCheese(extraCheeseCheckBox.isSelected());
-        pizza.setExtraSauce(extraSauceCheckBox.isSelected());
+        pizza.setExtraCheese(extraCheeseCheckBox.isChecked());
+        pizza.setExtraSauce(extraSauceCheckBox.isChecked());
         return pizza;
     }
 }
