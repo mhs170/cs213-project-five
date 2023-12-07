@@ -258,10 +258,10 @@ public class BuildYourOwnScreen extends AppCompatActivity implements AdapterView
 
 
     public Pizza getPizza() {
-        Size selectedSize = ((Size) sizeSpinner.getSelectedItem());
         Pizza pizza = PizzaMaker.createPizza("BuildYourOwn");
+        Sauce selectedSauce = Sauce.valueOf(sauceSpinner.getSelectedItem().toString().toUpperCase());
+        Size selectedSize = Size.valueOf(sizeSpinner.getSelectedItem().toString().toUpperCase());
         pizza.setSize(selectedSize);
-        Sauce selectedSauce = ((Sauce) sauceSpinner.getSelectedItem());
         pizza.setSauce(selectedSauce);
         pizza.setToppings(selectedToppings);
         pizza.setExtraCheese(extraCheeseCheckBox.isSelected());
