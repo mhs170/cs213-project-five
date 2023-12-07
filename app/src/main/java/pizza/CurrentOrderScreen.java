@@ -78,4 +78,8 @@ public class CurrentOrderScreen extends AppCompatActivity {
             startActivity(intent);
         });
     }
+
+    public void addToCurrentOrder(Pizza pizza) {
+        currentOrder.addToOrder(pizza);
+    }
 }

@@ -31,11 +31,6 @@ public class BuildYourOwnScreen extends AppCompatActivity implements AdapterView
             R.drawable.pepperoni, R.drawable.seafood, R.drawable.supreme
     };
 
-    private List<String> availableToppings;
-    private List<String> selectedToppings;
-
-    private ArrayAdapter<String> availableToppingsAdapter;
-    private ArrayAdapter<String> selectedToppingsAdapter;
     private Topping[] toppings = {Topping.BLACK_OLIVE,
             Topping.GREEN_PEPPER,
             Topping.MUSHROOM,
@@ -50,6 +45,18 @@ public class BuildYourOwnScreen extends AppCompatActivity implements AdapterView
             Topping.CRAB_MEATS,
             Topping.SHRIMP};
 
+    private ArrayList<Topping> availableToppings = new ArrayList<>(Arrays.asList(toppings));
+    private ArrayList<Topping> selectedToppings = new ArrayList<>();
+
+    private ArrayAdapter<Topping> availableToppingsAdapter;
+    private ArrayAdapter<Topping> selectedToppingsAdapter;
+
+    private Spinner sizeSpinner;
+    private Spinner sauceSpinner;
+    private CheckBox extraSauceCheckBox;
+    private CheckBox extraCheeseCheckBox;
+
+    private Button addToOrderButton;
 
     /**
      * Get the references of all instances of Views defined in the layout file, set up the list of
@@ -61,13 +68,13 @@ public class BuildYourOwnScreen extends AppCompatActivity implements AdapterView
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_build_your_own_screen);
 
-        Spinner sizeSpinner = findViewById(R.id.size_spinner);
+        sizeSpinner = findViewById(R.id.size_spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.sizes, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sizeSpinner.setAdapter(adapter);
         sizeSpinner.setOnItemSelectedListener(this);
 
-        Spinner sauceSpinner = findViewById(R.id.sauce_spinner);
+        sauceSpinner = findViewById(R.id.sauce_spinner);
         ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(this, R.array.sauces, android.R.layout.simple_spinner_item);
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sauceSpinner.setAdapter(adapter1);
@@ -80,7 +87,7 @@ public class BuildYourOwnScreen extends AppCompatActivity implements AdapterView
             startActivity(intent);
         });
 
-        CheckBox extraSauceCheckBox = findViewById(R.id.extraSauceCheckBox);
+        extraSauceCheckBox = findViewById(R.id.extraSauceCheckBox);
         extraSauceCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -93,7 +100,7 @@ public class BuildYourOwnScreen extends AppCompatActivity implements AdapterView
             }
         });
 
-        CheckBox extraCheeseCheckBox = findViewById(R.id.extraCheeseCheckBox);
+        extraCheeseCheckBox = findViewById(R.id.extraCheeseCheckBox);
         extraCheeseCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -106,64 +113,52 @@ public class BuildYourOwnScreen extends AppCompatActivity implements AdapterView
             }
         });
 
-        availableToppings = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.available_toppings)));
-        selectedToppings = new ArrayList<>();
-
-        availableToppingsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_single_choice, availableToppings);
-        selectedToppingsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_single_choice, selectedToppings);
-
         ListView availableToppingsListView = findViewById(R.id.availableToppingList);
+        availableToppingsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, availableToppings);
         availableToppingsListView.setAdapter(availableToppingsAdapter);
+
         availableToppingsListView.setOnItemClickListener(this);
 
         ListView selectedToppingsListView = findViewById(R.id.selectedToppingList);
+        selectedToppingsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, selectedToppings);
         selectedToppingsListView.setAdapter(selectedToppingsAdapter);
         selectedToppingsListView.setOnItemClickListener(this);
 
-        availableToppingsListView.setOnItemClickListener((parent, view, position, id) -> {
-            String selectedTopping = availableToppings.get(position);
-            AlertDialog.Builder builder = new AlertDialog.Builder(BuildYourOwnScreen.this);
-            builder.setTitle("Add Topping");
-            builder.setMessage("Do you want to add " + selectedTopping + "?");
+        addToOrderButton = findViewById(R.id.addToOrderButton);
+        addToOrderButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (selectedToppings.size() < 3){
+                    new AlertDialog.Builder(BuildYourOwnScreen.this)
+                            .setTitle("Not enough toppings")
+                            .setMessage("You need at least 3 toppings.")
+                            .setPositiveButton(android.R.string.ok, null)
+                            .show();
+                }
+                else if (selectedToppings.size() > 7){
+                    new AlertDialog.Builder(BuildYourOwnScreen.this)
+                            .setTitle("Too many toppings")
+                            .setMessage("You can have at most 7 toppings.")
+                            .setPositiveButton(android.R.string.ok, null)
+                            .show();
+                }
+                else{
+                    new AlertDialog.Builder(BuildYourOwnScreen.this)
+                            .setTitle("Successfully added")
+                            .setMessage("Successfully added pizza to current order.")
+                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
 
-            builder.setPositiveButton("Add", (dialog, which) -> {
-                // User clicked Add button
-                availableToppings.remove(position);
-                selectedToppings.add(selectedTopping);
-                refreshAdapters();
-            });
-
-            builder.setNegativeButton("Cancel", (dialog, which) -> {
-                // User clicked Cancel button
-                dialog.dismiss(); // Dismiss the dialog
-            });
-            builder.show();
-        });
-
-        selectedToppingsListView.setOnItemClickListener((parent, view, position, id) -> {
-            String removedTopping = selectedToppings.get(position);
-
-            // Build an AlertDialog to confirm the removal of the topping
-            AlertDialog.Builder builder = new AlertDialog.Builder(BuildYourOwnScreen.this);
-            builder.setTitle("Remove Topping");
-            builder.setMessage("Do you want to remove " + removedTopping + "?");
-
-            // Add positive button to confirm removal
-            builder.setPositiveButton("Remove", (dialog, which) -> {
-                // User clicked Remove button
-                selectedToppings.remove(position);
-                availableToppings.add(removedTopping);
-                refreshAdapters();
-            });
-
-            // Add negative button to cancel removal
-            builder.setNegativeButton("Cancel", (dialog, which) -> {
-                // User clicked Cancel button
-                dialog.dismiss(); // Dismiss the dialog
-            });
-
-            // Show the AlertDialog
-            builder.show();
+                                    Intent intent = getIntent();
+                                    finish();
+                                    startActivity(intent);
+                                }
+                            })
+                            .show();
+                }
+            }
         });
     }
 
@@ -199,11 +194,66 @@ public class BuildYourOwnScreen extends AppCompatActivity implements AdapterView
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        Topping selectedTopping;
+        List<Topping> sourceList;
+        List<Topping> targetList;
+        ArrayAdapter<Topping> sourceAdapter;
+        ArrayAdapter<Topping> targetAdapter;
+        String action;
+        String message;
 
+        if (adapterView.getId() == R.id.availableToppingList) {
+            selectedTopping = availableToppings.get(i);
+            sourceList = availableToppings;
+            targetList = selectedToppings;
+            sourceAdapter = availableToppingsAdapter;
+            targetAdapter = selectedToppingsAdapter;
+            action = "add";
+        } else if (adapterView.getId() == R.id.selectedToppingList) {
+            selectedTopping = selectedToppings.get(i);
+            sourceList = selectedToppings;
+            targetList = availableToppings;
+            sourceAdapter = selectedToppingsAdapter;
+            targetAdapter = availableToppingsAdapter;
+            action = "remove";
+        } else {
+            return;
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(BuildYourOwnScreen.this);
+        builder.setTitle("Topping");
+
+        if (action.equals("add")) {
+            message = "Do you want to add " + selectedTopping + "?";
+        }
+        else{
+            message = "Do you want to remove " + selectedTopping + "?";
+        }
+        builder.setMessage(message);
+
+        builder.setPositiveButton(action.equals("add") ? "Add" : "Remove", (dialog, which) -> {
+            sourceList.remove(i);
+            targetList.add(selectedTopping);
+            sourceAdapter.notifyDataSetChanged();
+            targetAdapter.notifyDataSetChanged();
+        });
+
+        builder.setNegativeButton("Cancel", (dialog, which) -> {
+            dialog.dismiss();
+        });
+
+        builder.show();
     }
 
-    private void refreshAdapters() {
-        availableToppingsAdapter.notifyDataSetChanged();
-        selectedToppingsAdapter.notifyDataSetChanged();
+
+
+    public Pizza getPizza() {
+        Pizza pizza = PizzaMaker.createPizza("BuildYourOwn");
+        pizza.setToppings(new ArrayList<>(selectedToppings));
+        pizza.setSauce((Sauce) sauceSpinner.getSelectedItem());
+        pizza.setExtraCheese(extraCheeseCheckBox.isSelected());
+        pizza.setExtraSauce(extraSauceCheckBox.isSelected());
+        pizza.setSize((Size) sizeSpinner.getSelectedItem());
+        return pizza;
     }
 }
