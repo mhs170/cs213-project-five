@@ -6,11 +6,6 @@
         <item>Pepperoni</item>
         <item>Seafood</item>
         <item>Supreme</item>
-        <item>Breakfast</item>
-        <item>Hawaiian</item>
-        <item>Philly</item>
-        <item>Alfredo</item>
-        <item>Veggie</item>
     </string-array>
     <string-array name="quantities">
         <item>1</item>
