@@ -56,7 +56,7 @@ public class CurrentOrderScreen extends AppCompatActivity {
 
         Button placeOrder = findViewById(R.id.btn_place_order);
         placeOrder.setOnClickListener(view -> {
-            if(currentOrder.getPizzas().isEmpty()) {
+            if (currentOrder.getPizzas().isEmpty()) {
                 Toast.makeText(view.getContext(), "Order is empty.", Toast.LENGTH_SHORT).show();
             } else {
                 Singleton globalData = Singleton.getInstance();

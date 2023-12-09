@@ -113,4 +113,24 @@
     <string name="action_home">Home</string>
     <string name="no_order">NO ORDERS\n</string>
     <string name="order">Order</string>
+    <string name="extra_sauce_added">Extra Sauce Added</string>
+    <string name="extra_sauce_removed">Extra Sauce Removed</string>
+    <string name="extra_cheese_added">Extra Cheese Added</string>
+    <string name="extra_cheese_removed">Extra Cheese Removed</string>
+    <string name="not_enough_toppings">Not Enough Toppings</string>
+    <string name="at_least_three_toppings">You need at least 3 toppings.</string>
+    <string name="too_many_toppings">Too many toppings</string>
+    <string name="at_most_seven_toppings">You can have at most 7 toppings.</string>
+    <string name="successfully_added">Successfully added</string>
+    <string name="successfully_added_to_order">Successfully added pizza to current order.</string>
+    <string name="add_action">add</string>
+    <string name="remove_action">remove</string>
+    <string name="topping_text">Topping</string>
+    <string name="add_message_prompt">Do you want to add </string>
+    <string name="question_mark">?</string>
+    <string name="remove_message_prompt">Do you want to remove </string>
+    <string name="add_choice">Add</string>
+    <string name="remove_choice">Remove</string>
+    <string name="cancel_choice">Cancel</string>
+    <string name="byo">BuildYourOwn</string>
 </resources>

@@ -1,6 +1,6 @@
 package pizza;
 
-import android.content.DialogInterface;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -8,7 +8,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -25,14 +24,8 @@ import java.util.List;
 
 public class BuildYourOwnScreen extends AppCompatActivity implements AdapterView.OnItemSelectedListener, AdapterView.OnItemClickListener {
 
-    private ArrayList<SpecialityItem> items = new ArrayList<>();
 
-    private int [] itemImages = {
-            R.drawable.deluxe, R.drawable.meatzza,
-            R.drawable.pepperoni, R.drawable.seafood, R.drawable.supreme
-    };
-
-    private Topping[] toppings = {Topping.BLACK_OLIVE,
+    private final Topping[] toppings = {Topping.BLACK_OLIVE,
             Topping.GREEN_PEPPER,
             Topping.MUSHROOM,
             Topping.ONION,
@@ -46,8 +39,8 @@ public class BuildYourOwnScreen extends AppCompatActivity implements AdapterView
             Topping.CRAB_MEATS,
             Topping.SHRIMP};
 
-    private ArrayList<Topping> availableToppings = new ArrayList<>(Arrays.asList(toppings));
-    private ArrayList<Topping> selectedToppings = new ArrayList<>();
+    private final ArrayList<Topping> availableToppings = new ArrayList<>(Arrays.asList(toppings));
+    private final ArrayList<Topping> selectedToppings = new ArrayList<>();
 
     private ArrayAdapter<Topping> availableToppingsAdapter;
     private ArrayAdapter<Topping> selectedToppingsAdapter;
@@ -56,19 +49,20 @@ public class BuildYourOwnScreen extends AppCompatActivity implements AdapterView
     private Spinner sauceSpinner;
     private CheckBox extraSauceCheckBox;
     private CheckBox extraCheeseCheckBox;
-    private Button addToOrderButton;
     private TextView priceBox;
+    private final int MIN_TOPPINGS = 3;
+    private final int MAX_TOPPINGS = 7;
 
     /**
      * Get the references of all instances of Views defined in the layout file, set up the list of
      * items to be display in the RecyclerView.
+     *
      * @param savedInstanceState
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_build_your_own_screen);
-
 
 
         sizeSpinner = findViewById(R.id.size_spinner);
@@ -91,31 +85,23 @@ public class BuildYourOwnScreen extends AppCompatActivity implements AdapterView
         });
 
         extraSauceCheckBox = findViewById(R.id.extraSauceCheckBox);
-        extraSauceCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
-                    Toast.makeText(getApplicationContext(), "Extra Sauce Added", Toast.LENGTH_SHORT).show();
-                }
-                else{
-                    Toast.makeText(getApplicationContext(), "Extra Sauce Removed", Toast.LENGTH_SHORT).show();
-                }
-                updatePrice();
+        extraSauceCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                Toast.makeText(getApplicationContext(), R.string.extra_sauce_added, Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getApplicationContext(), R.string.extra_sauce_removed, Toast.LENGTH_SHORT).show();
             }
+            updatePrice();
         });
 
         extraCheeseCheckBox = findViewById(R.id.extraCheeseCheckBox);
-        extraCheeseCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
-                    Toast.makeText(getApplicationContext(), "Extra Cheese Added", Toast.LENGTH_SHORT).show();
-                }
-                else{
-                    Toast.makeText(getApplicationContext(), "Extra Cheese Removed", Toast.LENGTH_SHORT).show();
-                }
-                updatePrice();
+        extraCheeseCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                Toast.makeText(getApplicationContext(), R.string.extra_cheese_added, Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getApplicationContext(), R.string.extra_cheese_removed, Toast.LENGTH_SHORT).show();
             }
+            updatePrice();
         });
 
         ListView availableToppingsListView = findViewById(R.id.availableToppingList);
@@ -133,62 +119,35 @@ public class BuildYourOwnScreen extends AppCompatActivity implements AdapterView
         updatePrice();
 
 
-        addToOrderButton = findViewById(R.id.addToOrderButton);
-        addToOrderButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (selectedToppings.size() < 3){
-                    new AlertDialog.Builder(BuildYourOwnScreen.this)
-                            .setTitle("Not enough toppings")
-                            .setMessage("You need at least 3 toppings.")
-                            .setPositiveButton(android.R.string.ok, null)
-                            .show();
-                }
-                else if (selectedToppings.size() > 7){
-                    new AlertDialog.Builder(BuildYourOwnScreen.this)
-                            .setTitle("Too many toppings")
-                            .setMessage("You can have at most 7 toppings.")
-                            .setPositiveButton(android.R.string.ok, null)
-                            .show();
-                }
-                else{
-                    addPizzaToCurrentOrder(getPizza());
-                    new AlertDialog.Builder(BuildYourOwnScreen.this)
-                            .setTitle("Successfully added")
-                            .setMessage("Successfully added pizza to current order.")
-                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
+        Button addToOrderButton = findViewById(R.id.addToOrderButton);
+        addToOrderButton.setOnClickListener(v -> {
+            if (selectedToppings.size() < MIN_TOPPINGS) {
+                new AlertDialog.Builder(BuildYourOwnScreen.this)
+                        .setTitle(R.string.not_enough_toppings)
+                        .setMessage(R.string.at_least_three_toppings)
+                        .setPositiveButton(android.R.string.ok, null)
+                        .show();
+            } else if (selectedToppings.size() > MAX_TOPPINGS) {
+                new AlertDialog.Builder(BuildYourOwnScreen.this)
+                        .setTitle(R.string.too_many_toppings)
+                        .setMessage(R.string.at_most_seven_toppings)
+                        .setPositiveButton(android.R.string.ok, null)
+                        .show();
+            } else {
+                addPizzaToCurrentOrder(getPizza());
+                new AlertDialog.Builder(BuildYourOwnScreen.this)
+                        .setTitle(R.string.successfully_added)
+                        .setMessage(R.string.successfully_added_to_order)
+                        .setPositiveButton(android.R.string.ok, (dialog, which) -> {
+                            dialog.dismiss();
 
-                                    Intent intent = getIntent();
-                                    finish();
-                                    startActivity(intent);
-                                }
-                            })
-                            .show();
-                }
+                            Intent intent = getIntent();
+                            finish();
+                            startActivity(intent);
+                        })
+                        .show();
             }
         });
-    }
-
-    /**
-     * Helper method to set up the data (the Model of the MVC).
-     */
-    private void setupMenuItems() {
-        /*
-         * Item names are defined in a String array under res/string.xml.
-         * Your item names might come from other places, such as an external file, or the database
-         * from the backend.
-         */
-        String [] itemNames = getResources().getStringArray(R.array.itemNames);
-        /* Add the items to the ArrayList.
-         * Note that I use hardcoded prices for demo purpose. This should be replace by other
-         * data sources.
-         */
-        for (int i = 0; i < itemNames.length; i++) {
-            items.add(new SpecialityItem(itemNames[i], itemImages[i], "$1.39"));
-        }
     }
 
     @Override
@@ -219,30 +178,29 @@ public class BuildYourOwnScreen extends AppCompatActivity implements AdapterView
             targetList = selectedToppings;
             sourceAdapter = availableToppingsAdapter;
             targetAdapter = selectedToppingsAdapter;
-            action = "add";
+            action = getString(R.string.add_action);
         } else if (adapterView.getId() == R.id.selectedToppingList) {
             selectedTopping = selectedToppings.get(i);
             sourceList = selectedToppings;
             targetList = availableToppings;
             sourceAdapter = selectedToppingsAdapter;
             targetAdapter = availableToppingsAdapter;
-            action = "remove";
+            action = getString(R.string.remove_action);
         } else {
             return;
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(BuildYourOwnScreen.this);
-        builder.setTitle("Topping");
+        builder.setTitle(R.string.topping_text);
 
-        if (action.equals("add")) {
-            message = "Do you want to add " + selectedTopping + "?";
-        }
-        else{
-            message = "Do you want to remove " + selectedTopping + "?";
+        if (action.equals(getString(R.string.add_action))) {
+            message = getString(R.string.add_message_prompt) + " " + selectedTopping + getString(R.string.question_mark);
+        } else {
+            message = getString(R.string.remove_message_prompt) + " " + selectedTopping + getString(R.string.question_mark);
         }
         builder.setMessage(message);
 
-        builder.setPositiveButton(action.equals("add") ? "Add" : "Remove", (dialog, which) -> {
+        builder.setPositiveButton(action.equals(getString(R.string.add_action)) ? getString(R.string.add_choice) : getString(R.string.remove_choice), (dialog, which) -> {
             sourceList.remove(i);
             targetList.add(selectedTopping);
             sourceAdapter.notifyDataSetChanged();
@@ -250,7 +208,7 @@ public class BuildYourOwnScreen extends AppCompatActivity implements AdapterView
             updatePrice();
         });
 
-        builder.setNegativeButton("Cancel", (dialog, which) -> {
+        builder.setNegativeButton(R.string.cancel_choice, (dialog, which) -> {
             dialog.dismiss();
         });
 
@@ -261,13 +219,14 @@ public class BuildYourOwnScreen extends AppCompatActivity implements AdapterView
         Singleton.getInstance().currentOrder.addToOrder(pizza);
     }
 
+    @SuppressLint("DefaultLocale")
     public void updatePrice() {
         priceBox.setText(String.format("%.2f", getPizza().price()));
     }
 
 
     public Pizza getPizza() {
-        Pizza pizza = PizzaMaker.createPizza("BuildYourOwn");
+        Pizza pizza = PizzaMaker.createPizza(getString(R.string.byo));
         Sauce selectedSauce = Sauce.valueOf(sauceSpinner.getSelectedItem().toString().toUpperCase());
         Size selectedSize = Size.valueOf(sizeSpinner.getSelectedItem().toString().toUpperCase());
         pizza.setSize(selectedSize);
