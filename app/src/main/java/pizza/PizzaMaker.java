@@ -35,6 +35,26 @@ public class PizzaMaker {
                 pizza = new Seafood(Size.SMALL, Sauce.ALFREDO,
                         false, false, 0);
                 break;
+            case "Breakfast":
+                pizza = new Breakfast(Size.SMALL, Sauce.TOMATO,
+                        false, false, 0);
+                break;
+            case "Hawaiian":
+                pizza = new Hawaiian(Size.SMALL, Sauce.TOMATO,
+                        false, false, 0);
+                break;
+            case "Philly":
+                pizza = new Philly(Size.SMALL, Sauce.TOMATO,
+                        false, false, 0);
+                break;
+            case "Veggie":
+                pizza = new Veggie(Size.SMALL, Sauce.TOMATO,
+                        false, false, 0);
+                break;
+            case "Alfredo":
+                pizza = new Alfredo(Size.SMALL, Sauce.ALFREDO,
+                        false, false, 0);
+                break;
             case "BuildYourOwn":
                 pizza = new BuildYourOwn(new ArrayList<Topping>(), Size.SMALL, Sauce.TOMATO
                         , false, false, 0);
