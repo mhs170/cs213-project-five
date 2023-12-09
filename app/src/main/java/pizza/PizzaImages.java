@@ -15,8 +15,16 @@ public class PizzaImages {
                 return R.drawable.pepperoni;
             case "Seafood":
                 return R.drawable.seafood;
-            case "BuildYourOwn":
-                return R.drawable.deluxe;
+            case "Alfredo":
+                return R.drawable.alfredo;
+            case "Breakfast":
+                return R.drawable.breakfast;
+            case "Hawaiian":
+                return R.drawable.hawaiian;
+            case "Philly":
+                return R.drawable.philly;
+            case "Veggie":
+                return R.drawable.veggie;
             default:
                 throw new IllegalStateException("Unexpected pizza type: '" + pizzaType + "'");
         }
